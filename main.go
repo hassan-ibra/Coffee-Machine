@@ -14,9 +14,6 @@ type coffee_machine struct{
 }
 
 func (cm *coffee_machine)buy(){
-	
-
-
 	// For one espresso, the coffee machine needs 250 ml of water and 16 g of coffee beans. It costs $4.
 	espresso_water := 250
 	espresso_coffeeB := 16
@@ -32,7 +29,7 @@ func (cm *coffee_machine)buy(){
 	cappuccino_coffeeB := 12
 	cappuccino_costs := 6
 	
-	fmt.Println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ")
+	fmt.Println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
 	
 	var coffee_option int
 	fmt.Scan(&coffee_option)
@@ -45,8 +42,16 @@ func (cm *coffee_machine)buy(){
 			cm.disposable_cups -= 1
 			cm.money += espresso_costs
 		}else{
-			fmt.Println("Sorry, not enough water!")
-		}
+			if cm.water < cappuccino_water{
+				fmt.Println("Sorry, not enough water!")
+			}else if cm.milk < cappuccino_milk{
+				fmt.Println("Sorry, not enough milk!")
+			}else if cm.coffee_beans >= cappuccino_coffeeB {
+				fmt.Println("Sorry, not enough coffee bean!")
+			}else{
+				fmt.Println("Sorry, not enough disposable cups!")
+			}
+		}	
 	case 2:
 		if cm.water >= latte_water && cm.milk >= latte_milk && cm.coffee_beans >= latte_coffeeB && cm.disposable_cups > 0{
 			fmt.Println("I have enough resources, making you a coffee!")
@@ -57,8 +62,16 @@ func (cm *coffee_machine)buy(){
 			cm.money+= latte_costs
 			
 		}else{
-			fmt.Println("Sorry, not enough water!")
-		}
+			if cm.water < cappuccino_water{
+				fmt.Println("Sorry, not enough water!")
+			}else if cm.milk < cappuccino_milk{
+				fmt.Println("Sorry, not enough milk!")
+			}else if cm.coffee_beans >= cappuccino_coffeeB {
+				fmt.Println("Sorry, not enough coffee bean!")
+			}else{
+				fmt.Println("Sorry, not enough disposable cups!")
+			}
+		}	
 	case 3:
 		if cm.water >= cappuccino_water && cm.milk >= cappuccino_milk && cm.coffee_beans >= cappuccino_coffeeB && cm.disposable_cups > 0{
 			fmt.Println("I have enough resources, making you a coffee!")
@@ -68,7 +81,15 @@ func (cm *coffee_machine)buy(){
 			cm.disposable_cups -= 1
 			cm.money+= cappuccino_costs	
 		}else{
-			fmt.Println("Sorry, not enough water!")
+			if cm.water < cappuccino_water{
+				fmt.Println("Sorry, not enough water!")
+			}else if cm.milk < cappuccino_milk{
+				fmt.Println("Sorry, not enough milk!")
+			}else if cm.coffee_beans >= cappuccino_coffeeB {
+				fmt.Println("Sorry, not enough coffee bean!")
+			}else{
+				fmt.Println("Sorry, not enough disposable cups!")
+			}
 		}		
 	}
 	
@@ -88,28 +109,14 @@ func (cm *coffee_machine) fill(){
 	cm.water+=fill_water
 	cm.coffee_beans+=fill_coffee_beans
 	cm.disposable_cups+= fill_disposable_cups
-
-	// fmt.Printf("\nThe coffee machine has:\n")
-	// fmt.Printf("%v ml of water\n", cm.water)
-	// fmt.Printf("%v ml of milk\n", cm.milk)
-	// fmt.Printf("%v g of coffee beans\n",cm.coffee_beans)
-	// fmt.Printf("%v disposable cups\n", cm.disposable_cups)
-	// fmt.Printf("$%v of money\n",cm.money)
 }
 func(cm *coffee_machine)take() {
-	withdraw_money := 550
-	// fmt.Scan(&withdraw_money)
-	// if cm.money >= withdraw_money{
-	cm.money -=withdraw_money
-	// }
-	fmt.Println("I gave you $550")
+	fmt.Printf("I gave you $%v\n", cm.money)
+	cm.money = 0
+	
+	
 
-	fmt.Printf("\nThe coffee machine has:\n")
-	fmt.Printf("%v ml of water\n", cm.water)
-	fmt.Printf("%v ml of milk\n", cm.milk)
-	fmt.Printf("%v g of coffee beans\n",cm.coffee_beans)
-	fmt.Printf("%v disposable cups\n", cm.disposable_cups)
-	fmt.Printf("$%v of money\n",cm.money)
+	
 	
 }
 
